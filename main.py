@@ -1,20 +1,22 @@
 import sys
 from random import choice
-from PyQt5 import uic
+
 from PyQt5.QtGui import QPainter, QColor
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(300, 300, 200, 200)
-        uic.loadUi('UI.ui', self)
-        self.setWindowTitle('Жёлтые окружности')
+        self.setGeometry(300, 300, 600, 600)
+        self.setWindowTitle('Случайные окружности')
         self.do_paint = False
+        self.draw_button = QPushButton('Рисовать', self)
+        self.draw_button.resize(100, 25)
+        self.draw_button.move(260, 25)
         self.draw_button.clicked.connect(self.paint)
 
     def paintEvent(self, event):
@@ -29,10 +31,12 @@ class MyWidget(QMainWindow):
         self.repaint()
     
     def draw_circle(self, qp):
-        qp.setBrush(QColor(225, 225, 0))
-        a = list(range(10, 300))
-        radius = choice(a)
-        qp.drawEllipse(300, 150, radius, radius)
+        a = list(range(255))
+        r, g, b = choice(a), choice(a), choice(a)
+        qp.setBrush(QColor(r, g, b))
+        c = list(range(10, 300))
+        radius = choice(c)
+        qp.drawEllipse(200, 150, radius, radius)
 
 
 if __name__ == '__main__':
